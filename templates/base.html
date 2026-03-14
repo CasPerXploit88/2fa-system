@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}S1xSec 2FA{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="scanlines"></div>
+  <nav class="navbar">
+    <span class="logo">S1x<span class="accent">Sec</span> <span class="tag">2FA System</span></span>
+    {% if session.get('user_id') %}
+    <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+    {% endif %}
+  </nav>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

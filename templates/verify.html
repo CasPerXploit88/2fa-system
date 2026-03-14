@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Verify OTP — S1xSec 2FA{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h1 class="card-title">Verify Identity</h1>
+    <p class="card-sub">Step 2 of 2 — One-Time Password</p>
+  </div>
+
+  <div class="otp-info">
+    <p>A 6-digit code was sent to your email.</p>
+    <div class="countdown-wrap">
+      <svg class="countdown-ring" viewBox="0 0 44 44">
+        <circle class="ring-bg" cx="22" cy="22" r="18"/>
+        <circle class="ring-progress" id="ringProgress" cx="22" cy="22" r="18"
+                stroke-dasharray="113" stroke-dashoffset="0"/>
+      </svg>
+      <span class="countdown-num" id="countdownNum">30</span>
+    </div>
+    <p class="hint" id="timerLabel">Code expires in <strong id="timerSec">30</strong>s</p>
+  </div>
+
+  {% if error %}
+  <div class="alert alert-error">{{ error }}</div>
+  {% endif %}
+
+  <form method="POST" action="{{ url_for('verify') }}" novalidate id="otpForm">
+    <div class="field">
+      <label for="otp">Verification Code</label>
+      <input type="text" id="otp" name="otp" maxlength="6" placeholder="_ _ _ _ _ _"
+             inputmode="numeric" pattern="[0-9]{6}" autocomplete="one-time-code" required>
+    </div>
+    <button type="submit" class="btn btn-primary" id="submitBtn">Verify</button>
+  </form>
+
+  <p class="switch">Wrong account? <a href="{{ url_for('logout') }}">Start over</a></p>
+</div>
+
+<script>
+  (function () {
+    const interval  = {{ interval }};
+    const numEl     = document.getElementById("countdownNum");
+    const secEl     = document.getElementById("timerSec");
+    const ring      = document.getElementById("ringProgress");
+    const label     = document.getElementById("timerLabel");
+    const submitBtn = document.getElementById("submitBtn");
+    const circumference = 113;
+
+    let remaining = interval;
+
+    const tick = () => {
+      remaining--;
+      numEl.textContent = remaining;
+      secEl.textContent = remaining;
+      const offset = circumference - (remaining / interval) * circumference;
+      ring.style.strokeDashoffset = offset;
+
+      if (remaining <= 5) {
+        ring.style.stroke = "#ff5252";
+        numEl.style.color = "#ff5252";
+      }
+
+      if (remaining <= 0) {
+        clearInterval(timer);
+        label.innerHTML   = "<strong style='color:#ff5252'>Code expired. Please login again.</strong>";
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Expired";
+        setTimeout(() => { window.location.href = "{{ url_for('login') }}"; }, 2000);
+      }
+    };
+
+    const timer = setInterval(tick, 1000);
+  })();
+</script>
+{% endblock %}

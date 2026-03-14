@@ -1,0 +1,344 @@
+/* ── reset & base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #0a0a0a;
+  --surface:    #111111;
+  --surface2:   #1a1a1a;
+  --border:     #222222;
+  --accent:     #00ff88;
+  --accent-dim: #00cc6a;
+  --danger:     #ff5252;
+  --warning:    #ffb74d;
+  --text:       #e0e0e0;
+  --muted:      #666666;
+  --font:       'Courier New', Courier, monospace;
+  --radius:     8px;
+}
+
+html { font-size: 16px; }
+
+body {
+  background:  var(--bg);
+  color:       var(--text);
+  font-family: var(--font);
+  min-height:  100vh;
+  display:     flex;
+  flex-direction: column;
+}
+
+/* ── scanlines ────────────────────────────────────────────────────────────── */
+.scanlines {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,.06) 2px,
+    rgba(0,0,0,.06) 4px
+  );
+}
+
+/* ── navbar ───────────────────────────────────────────────────────────────── */
+.navbar {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         14px 24px;
+  border-bottom:   1px solid var(--border);
+  background:      var(--surface);
+}
+
+.logo {
+  font-size:   1.1rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--text);
+}
+
+.accent { color: var(--accent); }
+
+.tag {
+  font-size:   .7rem;
+  color:       var(--muted);
+  margin-left: 8px;
+  letter-spacing: 1px;
+}
+
+.nav-link {
+  color:           var(--accent);
+  text-decoration: none;
+  font-size:       .85rem;
+  border:          1px solid var(--accent);
+  padding:         4px 12px;
+  border-radius:   var(--radius);
+  transition:      background .2s;
+}
+
+.nav-link:hover { background: rgba(0,255,136,.1); }
+
+/* ── container ────────────────────────────────────────────────────────────── */
+.container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+/* ── card ─────────────────────────────────────────────────────────────────── */
+.card {
+  width:         100%;
+  max-width:     440px;
+  background:    var(--surface);
+  border:        1px solid var(--border);
+  border-radius: var(--radius);
+  padding:       36px 32px;
+  animation:     fadeIn .3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.card-header  { margin-bottom: 24px; }
+.card-title   { font-size: 1.4rem; color: var(--accent); letter-spacing: 1px; margin-bottom: 4px; }
+.card-sub     { font-size: .8rem; color: var(--muted); }
+
+/* ── form elements ────────────────────────────────────────────────────────── */
+.field {
+  margin-bottom: 20px;
+}
+
+label {
+  display:       block;
+  font-size:     .8rem;
+  color:         var(--muted);
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width:         100%;
+  background:    var(--surface2);
+  border:        1px solid var(--border);
+  border-radius: var(--radius);
+  color:         var(--text);
+  font-family:   var(--font);
+  font-size:     1rem;
+  padding:       10px 14px;
+  outline:       none;
+  transition:    border-color .2s;
+}
+
+input:focus {
+  border-color: var(--accent);
+  box-shadow:   0 0 0 2px rgba(0,255,136,.1);
+}
+
+.input-wrap { position: relative; }
+
+.input-wrap input { padding-right: 44px; }
+
+.toggle-pw {
+  position:   absolute;
+  right:      10px;
+  top:        50%;
+  transform:  translateY(-50%);
+  background: none;
+  border:     none;
+  cursor:     pointer;
+  font-size:  1rem;
+  opacity:    .5;
+  transition: opacity .2s;
+}
+
+.toggle-pw:hover { opacity: 1; }
+
+.hint {
+  display:    block;
+  font-size:  .75rem;
+  color:      var(--muted);
+  margin-top: 4px;
+}
+
+/* ── password strength bar ────────────────────────────────────────────────── */
+.strength-bar {
+  height:        4px;
+  background:    var(--border);
+  border-radius: 2px;
+  margin-top:    8px;
+  overflow:      hidden;
+}
+
+.strength-fill {
+  height:     100%;
+  width:      0%;
+  border-radius: 2px;
+  transition: width .3s, background .3s;
+}
+
+/* ── buttons ──────────────────────────────────────────────────────────────── */
+.btn {
+  display:       block;
+  width:         100%;
+  padding:       12px;
+  border:        none;
+  border-radius: var(--radius);
+  font-family:   var(--font);
+  font-size:     .95rem;
+  font-weight:   bold;
+  letter-spacing: 1px;
+  cursor:        pointer;
+  transition:    opacity .2s, transform .1s;
+  text-align:    center;
+  text-decoration: none;
+  margin-top:    8px;
+}
+
+.btn:active { transform: scale(.98); }
+
+.btn-primary {
+  background: var(--accent);
+  color:      #000;
+}
+
+.btn-primary:hover   { opacity: .9; }
+.btn-primary:disabled { opacity: .4; cursor: not-allowed; }
+
+.btn-outline {
+  background:  transparent;
+  border:      1px solid var(--accent);
+  color:       var(--accent);
+}
+
+.btn-outline:hover { background: rgba(0,255,136,.08); }
+
+/* ── alerts ───────────────────────────────────────────────────────────────── */
+.alert {
+  padding:       10px 14px;
+  border-radius: var(--radius);
+  font-size:     .85rem;
+  margin-bottom: 20px;
+}
+
+.alert-error   { background: rgba(255,82,82,.12);  border: 1px solid var(--danger);  color: var(--danger); }
+.alert-success { background: rgba(0,255,136,.1);   border: 1px solid var(--accent);  color: var(--accent); }
+
+/* ── switch link ──────────────────────────────────────────────────────────── */
+.switch {
+  margin-top: 20px;
+  font-size:  .8rem;
+  color:      var(--muted);
+  text-align: center;
+}
+
+.switch a {
+  color:           var(--accent);
+  text-decoration: none;
+}
+
+.switch a:hover { text-decoration: underline; }
+
+/* ── OTP verify page ──────────────────────────────────────────────────────── */
+.otp-info {
+  text-align:    center;
+  margin-bottom: 24px;
+  font-size:     .85rem;
+  color:         var(--muted);
+}
+
+.countdown-wrap {
+  position:    relative;
+  display:     inline-block;
+  margin:      16px auto;
+}
+
+.countdown-ring {
+  width:  80px;
+  height: 80px;
+}
+
+.ring-bg       { fill: none; stroke: var(--border); stroke-width: 4; }
+
+.ring-progress {
+  fill:             none;
+  stroke:           var(--accent);
+  stroke-width:     4;
+  stroke-linecap:   round;
+  transform:        rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition:       stroke-dashoffset 1s linear, stroke .3s;
+}
+
+.countdown-num {
+  position:   absolute;
+  top:        50%;
+  left:       50%;
+  transform:  translate(-50%, -50%);
+  font-size:  1.3rem;
+  font-weight: bold;
+  color:      var(--accent);
+  transition: color .3s;
+}
+
+#otp {
+  text-align:    center;
+  font-size:     1.6rem;
+  letter-spacing: 10px;
+}
+
+/* ── dashboard ────────────────────────────────────────────────────────────── */
+.dashboard-card { text-align: center; }
+
+.success-icon {
+  font-size:     3rem;
+  margin-bottom: 12px;
+}
+
+.user-badge {
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  gap:           10px;
+  background:    var(--surface2);
+  border:        1px solid var(--accent);
+  border-radius: var(--radius);
+  padding:       14px;
+  margin:        24px 0;
+}
+
+.badge-icon   { font-size: 1.4rem; }
+.badge-name   { font-weight: bold; color: var(--accent); font-size: 1rem; }
+.badge-status { font-size: .75rem; color: var(--muted); background: rgba(0,255,136,.1); padding: 2px 8px; border-radius: 4px; }
+
+.info-grid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   12px;
+  margin-bottom:         24px;
+}
+
+.info-item {
+  background:    var(--surface2);
+  border:        1px solid var(--border);
+  border-radius: var(--radius);
+  padding:       12px;
+  text-align:    left;
+}
+
+.info-label { display: block; font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.info-value { font-size: .85rem; font-weight: bold; }
+
+/* ── responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .card    { padding: 28px 20px; }
+  .info-grid { grid-template-columns: 1fr; }
+}

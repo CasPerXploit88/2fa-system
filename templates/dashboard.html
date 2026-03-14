@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — S1xSec 2FA{% endblock %}
+
+{% block content %}
+<div class="card dashboard-card">
+  <div class="success-icon">✅</div>
+  <h1 class="card-title">Access Granted</h1>
+  <p class="card-sub">Identity verified via 2FA</p>
+
+  <div class="user-badge">
+    <span class="badge-icon">🛡</span>
+    <span class="badge-name">{{ username }}</span>
+    <span class="badge-status">Authenticated</span>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-item">
+      <span class="info-label">Auth Method</span>
+      <span class="info-value accent">TOTP 2FA</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Session</span>
+      <span class="info-value accent">Active (30 min)</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">OTP Standard</span>
+      <span class="info-value accent">RFC 6238</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Encryption</span>
+      <span class="info-value accent">bcrypt + TLS</span>
+    </div>
+  </div>
+
+  <a href="{{ url_for('logout') }}" class="btn btn-outline">Sign Out</a>
+</div>
+{% endblock %}
