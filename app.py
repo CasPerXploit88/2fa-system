@@ -86,8 +86,7 @@ def login():
 
     db.create_otp_session(user["id"], token)
 
-    print(f"\n{'='*30}\nOTP FOR {user['username']}: {otp}\n{'='*30}\n")
-    sent = True
+    sent = send_otp_email(user["email"], otp, user["username"])
     if not sent:
         return render_template("login.html", error="Failed to send OTP email. Check your mail config.")
 
