@@ -42,6 +42,10 @@ def send_otp_email(recipient: str, otp_code: str, username: str) -> bool:
     try:
         with urllib.request.urlopen(req) as res:
             return res.status == 200
+    except urllib.error.HTTPError as e:
+        body = e.read().decode()
+        print(f"EMAIL ERROR: {e} | {body}")
+        return False
     except Exception as e:
         print(f"EMAIL ERROR: {e}")
         return False
