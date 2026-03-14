@@ -29,3 +29,6 @@ class Config:
 
     # bcrypt
     BCRYPT_ROUNDS               = 12
+    
+    # api key
+    RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
