@@ -6,7 +6,7 @@ from config import Config
 
 def send_otp_email(recipient: str, otp_code: str, username: str) -> bool:
     payload = json.dumps({
-        "from": "S1xSec 2FA <onboarding@resend.dev>",
+        "from": "S1xSec 2FA <folahantestimony572@gmail.com>",
         "to": [recipient],
         "subject": "Your 2FA Verification Code",
         "html": f"""
